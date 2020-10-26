@@ -2,6 +2,7 @@ package _04_Base64_Decoder;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.HashMap;
 
 public class Base64Decoder {
 	/*
@@ -33,10 +34,26 @@ public class Base64Decoder {
 		'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
 	};
-	
+    final static int[] basr64Nums = {
+    	000000,010000,100000,110000,000001,010001,100001,110001,000010,010010,100010,
+    	110010,000011,010011,100011,110011,000100,010100,100100,110100,000101,
+    	010101,100101,110101, 000110, 010110,100110,110110,000111,010111,100111,110111,
+    	001000,011000,101000,111000,001001,011001,101001,111001,001010,011010,111010,
+    	001011,011011,101011,111011,001100,011100,101100,111100,001101,011101,101101,111101,
+    	001110,011110,101110,111110,001111,011111,101111,111111
+    };
+    HashMap<String, Integer> theKey = new HashMap<String, Integer>();
+
 	//1. Complete this method so that it returns the the element in
 	//   the base64Chars array that corresponds to the passed in char.
 	public static byte convertBase64Char(char c){
+		HashMap<String, Integer> theKey = new HashMap<String, Integer>();
+		//nested for loops making the hashmap.
+String letter = ""+c;
+
+
+
+
 		return 0;
 	}
 	
