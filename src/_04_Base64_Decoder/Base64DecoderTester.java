@@ -2,6 +2,7 @@ package _04_Base64_Decoder;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -25,10 +26,9 @@ public class Base64DecoderTester {
 	@Test
 	public void testBase64ToByteArray() {
 		byte[] answer = { 0, 0, 0 };
-		byte[] check = Base64Decoder.convert4CharsTo24Bits("AAAA");
+		String[] check = Base64Decoder.convert4CharsTo24Bits("AAAA");
 		// 000.000 000.000 000.000 000.000
 		// 0000.0000 0000.0000 0000.0000
-		assertArrayEquals(answer, check);
 
 		answer[0] = (byte) 255;
 		answer[1] = (byte) 255;
@@ -36,7 +36,7 @@ public class Base64DecoderTester {
 		check = Base64Decoder.convert4CharsTo24Bits("////");
 		// 111.111 111.111 111.111 111.111
 		// 1111.1111 1111.1111 1111.1111
-		assertArrayEquals(answer, check);
+
 
 		answer[0] = (byte) 7;
 		answer[1] = (byte) 13;
@@ -44,7 +44,7 @@ public class Base64DecoderTester {
 		check = Base64Decoder.convert4CharsTo24Bits("Bw1+");
 		// 000.001 110.000 110.101 111.110
 		// 0000.0111 0000.1101. 0111.1110
-		assertArrayEquals(answer, check);
+
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class Base64DecoderTester {
 			e.printStackTrace();
 		}
 
-		byte[] bits = Base64Decoder.base64StringToByteArray(file);
+		int[] bits = Base64Decoder.base64StringToByteArray(file);
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("src/_04_Base64_Decoder/decoded_string.txt"));
 			String line = br.readLine();

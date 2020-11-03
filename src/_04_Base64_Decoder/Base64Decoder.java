@@ -3,7 +3,9 @@ package _04_Base64_Decoder;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashMap;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 public class Base64Decoder {
 	/*
 	 * Base 64 is a way of encoding binary data using text.
@@ -34,7 +36,7 @@ public class Base64Decoder {
 		'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
 	};
-    final static int[] basr64Nums = {
+    final static int[] base64Nums = {
     	000000,010000,100000,110000,000001,010001,100001,110001,000010,010010,100010,
     	110010,000011,010011,100011,110011,000100,010100,100100,110100,000101,
     	010101,100101,110101, 000110, 010110,100110,110110,000111,010111,100111,110111,
@@ -47,26 +49,71 @@ public class Base64Decoder {
 	//1. Complete this method so that it returns the the element in
 	//   the base64Chars array that corresponds to the passed in char.
 	public static byte convertBase64Char(char c){
-		HashMap<String, Integer> theKey = new HashMap<String, Integer>();
-		//nested for loops making the hashmap.
-String letter = ""+c;
+		
+char letter = ' ';
 
 
 
 
-		return 0;
+for(int i = 0; i< base64Chars.length; i++) {
+	String match = ""+c;
+	String base = ""+base64Chars[i];
+	if(match.equals(base)) {
+		letter = base64Chars[i];
+	}
+}
+		return (byte) letter;
 	}
 	
 	//2. Complete this method so that it will take in a string that is 4 
 	//   characters long and return an array of 3 bytes (24 bits). The byte 
 	//   array should be the binary value of the encoded characters.
-	public static byte[] convert4CharsTo24Bits(String s){
-		return null;
+	public static String[] convert4CharsTo24Bits(String s){
+		String[] split = new String[3];
+		for(int i = 0; i<3;i++) {int length = s.length()/3; for(int j = 0; j<length;j++) {
+		String letter = ""+s.charAt(j+i); split[i]+=convertStringToBinary(letter);}
+		}
+		return split;
 	}
 	
 	//3. Complete this method so that it takes in a string of any length
 	//   and returns the full byte array of the decoded base64 characters.
-	public static byte[] base64StringToByteArray(String file) {
-		return null;
+	public static int[] base64StringToByteArray(String file) {
+		HashMap<String, Integer> theKey = new HashMap<String, Integer>();
+		for (int i = 0; i < base64Chars.length; i++) {
+			String base= base64Chars[i]+"";
+			theKey.put(base, base64Nums[i]);
+		}
+		int[] code = new int[file.length()];
+		for(int i =0; i<code.length;i++) {
+			String letter = ""+file.charAt(i);
+			code[i] = theKey.get(letter);
+		}
+		return code;
 	}
+	 public static String convertStringToBinary(String input) {
+
+	        StringBuilder result = new StringBuilder();
+	        char[] chars = input.toCharArray();
+	        for (char aChar : chars) {
+	            result.append(
+	                    String.format("%8s", Integer.toBinaryString(aChar))  
+	                            .replaceAll(" ", "0")                       
+	            );
+	        }
+	        return result.toString();
+
+	    }
+
+	    public static String prettyBinary(String binary, int blockSize, String separator) {
+
+	        List<String> result = new ArrayList<>();
+	        int index = 0;
+	        while (index < binary.length()) {
+	            result.add(binary.substring(index, Math.min(index + blockSize, binary.length())));
+	            index += blockSize;
+	        }
+
+	        return result.stream().collect(Collectors.joining(separator));
+	    }
 }
